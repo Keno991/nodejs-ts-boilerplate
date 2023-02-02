@@ -1,0 +1,21 @@
+FROM node:16
+
+ENV NODE_ENV development
+
+RUN mkdir /app && chown -R node:node /app
+
+WORKDIR /app
+
+USER node
+
+RUN mkdir -p logs
+
+COPY --chown=node:node ./package.json ./
+
+RUN yarn
+
+EXPOSE 5000
+
+COPY --chown=node:node . .
+
+CMD ["yarn", "dev"]

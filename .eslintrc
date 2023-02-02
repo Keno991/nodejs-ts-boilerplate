@@ -1,0 +1,48 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "jest": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "airbnb-base",
+    "airbnb-typescript/base",
+    "plugin:import/recommended",
+    "plugin:import/typescript",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "project": "./tsconfig.json"
+  },
+  "plugins": ["@typescript-eslint", "import", "prettier"],
+  "settings": {
+    "import/resolver": {
+      "typescript": {
+        "alwaysTryTypes": true,
+        "project": "tsconfig.json"
+      }
+    }
+  },
+  "rules": {
+    "import/prefer-default-export": "off",
+    "no-underscore-dangle": "off",
+    "no-empty-function": ["error", { "allow": ["constructors"] }],
+    "@typescript-eslint/no-empty-function": [
+      "error",
+      { "allow": ["constructors"] }
+    ],
+    "class-methods-use-this": "off",
+    "max-classes-per-file": "off",
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      { "argsIgnorePattern": "^_" }
+    ],
+    "import/no-unresolved": "off"
+  }
+}

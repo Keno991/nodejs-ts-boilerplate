@@ -1,0 +1,4 @@
+dist
+/node_modules
+lint-staged.config.js
+src/server.d.ts

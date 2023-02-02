@@ -1,0 +1,8 @@
+Dockerfile.development
+Dockerfile.production
+Dockerfile.staging
+.dockerignore
+.husky
+node_modules
+logs
+.git

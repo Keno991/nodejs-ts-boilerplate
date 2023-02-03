@@ -7,3 +7,4 @@ process.env.TOKEN_REFRESH_PATH = '/api/v1/auth/refresh';
 process.env.TOKEN_REFRESH_NAME = 'refresh-token';
 
 process.env.NODE_ENV = 'test';
+process.env.USE_DB = 'false';

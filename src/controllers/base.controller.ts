@@ -1,9 +1,12 @@
 import { Response } from 'express';
+import { injectable } from 'inversify';
+import { interfaces } from 'inversify-express-utils';
 
 import { HttpStatusCode } from '@enums/http-status.enum';
 import { ResponseBuilder } from '@utils/response.util';
 
-export class BaseController {
+@injectable()
+export class BaseController implements interfaces.Controller {
   protected response<T>(res: Response, status: HttpStatusCode, data?: T) {
     return new ResponseBuilder(res)
       .setResponseStatus(status)

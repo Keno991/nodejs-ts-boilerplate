@@ -1,8 +1,9 @@
-import { Server } from 'http';
+import 'reflect-metadata';
 import supertest, { Test } from 'supertest';
 import { DataSource } from 'typeorm';
 import { newDb } from 'pg-mem';
 
+import { Server } from 'http';
 import { App } from '../../src/app';
 
 const db = newDb();
@@ -40,7 +41,7 @@ class HttpRequest {
       synchronize: true,
     });
     await this.masterConnection?.initialize();
-    this.server = await this.app.listen();
+    this.server = await this.app.buildServer();
     this.requestWithSupertest = supertest.agent(this.server);
   }
 

@@ -3,29 +3,26 @@ import cors from 'cors';
 import hpp from 'hpp';
 import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
+import { InversifyExpressServer } from 'inversify-express-utils';
 
+import { logger } from '@utils/logger.util';
 import { errorHandle } from './middleware/error.middleware';
 import morganMiddleware from './middleware/morgan.middleware';
-import { apiRoutes } from './routes';
-import { logger } from './utils/logger.util';
+import container from './ioc/ioc-container';
+
+import './controllers/hello-world.controller';
 import { env } from './utils/env.util';
 
 export class App {
   private readonly _app: Application;
-
-  private readonly port = env.PORT;
 
   constructor() {
     this._app = express();
     this.initializeMiddleware();
   }
 
-  async listen() {
-    this.initializeRoutes();
-
-    return this._app.listen(this.port, () =>
-      logger.info(`API listening on port ${this.port}!`)
-    );
+  async buildServer() {
+    return this.initializeRoutes();
   }
 
   private initializeMiddleware() {
@@ -41,8 +38,20 @@ export class App {
   }
 
   private initializeRoutes() {
-    apiRoutes(this._app);
     this._app.get('/health', (_, res) => res.json({ message: 'ok' }));
-    this._app.use(errorHandle);
+    const server = new InversifyExpressServer(
+      container,
+      null,
+      { rootPath: '/api/v1' },
+      this._app
+    );
+    server.setErrorConfig(app => {
+      app.use(errorHandle);
+    });
+    return server
+      .build()
+      .listen(env.PORT || 3000, () =>
+        logger.info(`Api running on ${env.PORT || 3000}`)
+      );
   }
 }

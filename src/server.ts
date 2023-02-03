@@ -12,7 +12,7 @@ const main = async () => {
 
   try {
     if (env.USE_DB) await setupDb();
-    const server = await app.listen();
+    const server = await app.buildServer();
 
     process.on('SIGTERM', () => {
       logger.debug('SIGTERM signal received: closing HTTP server');
